@@ -1,3 +1,6 @@
+# Dependencies
+node_modules/
+
 # Electron build output
 release/
 dist/
@@ -11,10 +14,3 @@ latest.yml
 
 # Logs
 *.log
-release/
-dist/
-win-unpacked/
-*.exe
-*.msi
-*.blockmap
-latest.yml
