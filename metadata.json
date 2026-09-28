@@ -1,0 +1,8 @@
+{
+  "name": "Remix DEZIGLO SOFT - Cricket Broadcast \u0026 Live Overlay",
+  "description": "Advanced TV broadcast cricket scoreboard and OBS/vMix live streaming overlay suite with real-time mobile scoring, custom deliveries, super overs, points tables, and scorecards.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

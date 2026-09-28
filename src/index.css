@@ -1,0 +1,77 @@
+
+/* Windows desktop split/snap support: allow the renderer to shrink with the native Electron window. */
+html,
+body,
+#root {
+  width: 100%;
+  min-width: 0;
+  min-height: 100%;
+  margin: 0;
+}
+
+body {
+  overflow-x: hidden;
+}
+
+@import "tailwindcss";
+
+@layer utilities {
+  .font-display {
+    font-family: 'Teko', sans-serif;
+  }
+  .font-tech {
+    font-family: 'Chakra Petch', sans-serif;
+  }
+  .font-sans-ui {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+  }
+}
+
+/* Print Styles for Scorecards and Points Table */
+@media print {
+  body {
+    background-color: #ffffff !important;
+    color: #0f172a !important;
+  }
+  .no-print {
+    display: none !important;
+  }
+  .print-only {
+    display: block !important;
+  }
+  .page-break {
+    page-break-before: always;
+  }
+}
+
+/* OBS Chroma key option or transparent overlay body */
+.overlay-transparent {
+  background: transparent !important;
+  background-color: transparent !important;
+}
+
+.overlay-green {
+  background: #00ff00 !important;
+}
+.overlay-blue {
+  background: #0000ff !important;
+}
+.overlay-magenta {
+  background: #ff00ff !important;
+}
+
+/* Custom scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: rgba(15, 23, 42, 0.6);
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(100, 116, 139, 0.5);
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(148, 163, 184, 0.8);
+}
