@@ -139,15 +139,14 @@ export const BroadcastOverlays: React.FC<{ isPreviewMode?: boolean }> = ({ isPre
             title: 'HAT-TRICK!',
             subtitle: `${lastBall.bowlerName?.toUpperCase() || 'BOWLER'} TAKES 3 IN 3!`,
             badge: 'HAT-TRICK MILESTONE',
-            icon: '🎩',
+            icon: '',
           });
         } else {
           setOverEventPopup('wicket');
           setOverEventMeta({
             title: 'WICKET!',
-            subtitle: `${lastBall.dismissal.playerOutName?.toUpperCase() || 'BATTER'} OUT (${lastBall.dismissal.type.toUpperCase()})`,
             badge: 'OUT',
-            icon: '☝️',
+            icon: '',
           });
         }
 
@@ -163,9 +162,8 @@ export const BroadcastOverlays: React.FC<{ isPreviewMode?: boolean }> = ({ isPre
         setOverEventPopup('free-hit');
         setOverEventMeta({
           title: 'FREE HIT!',
-          subtitle: noBallBatRuns > 0 ? `${noBallLabel} • ${lastBall.totalRunsOnBall || 1} RUNS ON NO-BALL` : 'NEXT BALL IS A FREE HIT',
           badge: noBallLabel,
-          icon: '🔥',
+          icon: '',
         });
         if (boundaryTimerRef.current) clearTimeout(boundaryTimerRef.current);
         boundaryTimerRef.current = setTimeout(() => {
@@ -174,10 +172,10 @@ export const BroadcastOverlays: React.FC<{ isPreviewMode?: boolean }> = ({ isPre
       } else if (lastBall.isBoundarySix || lastBall.runsScored === 6) {
         setOverEventPopup('6');
         setOverEventMeta({
-          title: 'MAXIMUM SIX!',
-          subtitle: '+6 RUNS BOUNDARY',
+          title: 'SIX!',
+          subtitle: '',
           badge: 'SIX',
-          icon: '💥',
+          icon: '',
         });
         if (boundaryTimerRef.current) clearTimeout(boundaryTimerRef.current);
         boundaryTimerRef.current = setTimeout(() => {
@@ -186,10 +184,10 @@ export const BroadcastOverlays: React.FC<{ isPreviewMode?: boolean }> = ({ isPre
       } else if (lastBall.isBoundaryFour || lastBall.runsScored === 4) {
         setOverEventPopup('4');
         setOverEventMeta({
-          title: 'CRACKING FOUR!',
-          subtitle: '+4 RUNS BOUNDARY',
+          title: 'FOUR!',
+          subtitle: '',
           badge: 'FOUR',
-          icon: '⚡',
+          icon: '',
         });
         if (boundaryTimerRef.current) clearTimeout(boundaryTimerRef.current);
         boundaryTimerRef.current = setTimeout(() => {
@@ -484,12 +482,12 @@ export const BroadcastOverlays: React.FC<{ isPreviewMode?: boolean }> = ({ isPre
                       }`}
                     >
                       <span className="text-xl animate-bounce">
-                        {overEventMeta.icon || (overEventPopup === 'free-hit' ? '🔥' : overEventPopup === '6' ? '💥' : overEventPopup === '4' ? '⚡' : '☝️')}
+                        {overEventMeta.icon || (overEventPopup === 'free-hit' ? '' : overEventPopup === '6' ? '' : overEventPopup === '4' ? '' : '')}
                       </span>
                       <div className="flex flex-col min-w-0">
                         <div className="flex items-center justify-center gap-1.5">
                           <span className="font-display font-black text-xl sm:text-2xl tracking-wider uppercase leading-none drop-shadow-md">
-                            {overEventMeta.title || (overEventPopup === '6' ? 'MAXIMUM SIX!' : 'CRACKING FOUR!')}
+                            {overEventMeta.title || (overEventPopup === '6' ? 'SIX!' : 'FOUR!')}
                           </span>
                           {overEventMeta.badge && (
                             <span className="text-[9px] font-tech font-bold px-1.5 py-0.5 rounded bg-black/40 uppercase tracking-wider border border-white/20">
@@ -498,11 +496,11 @@ export const BroadcastOverlays: React.FC<{ isPreviewMode?: boolean }> = ({ isPre
                           )}
                         </div>
                         <span className="font-tech text-[10px] font-bold text-slate-200 uppercase tracking-widest mt-0.5 truncate max-w-[200px] sm:max-w-xs">
-                          {overEventMeta.subtitle || (overEventPopup === '6' ? '+6 RUNS BOUNDARY' : '+4 RUNS BOUNDARY')}
+                          {overEventMeta.subtitle || (overEventPopup === '6' ? '' : '')}
                         </span>
                       </div>
                       <span className="text-xl animate-bounce">
-                        {overEventMeta.icon || (overEventPopup === 'free-hit' ? '🔥' : overEventPopup === '6' ? '💥' : overEventPopup === '4' ? '⚡' : '☝️')}
+                        {overEventMeta.icon || (overEventPopup === 'free-hit' ? '' : overEventPopup === '6' ? '' : overEventPopup === '4' ? '' : '')}
                       </span>
                     </motion.div>
                   )}
@@ -528,22 +526,30 @@ export const BroadcastOverlays: React.FC<{ isPreviewMode?: boolean }> = ({ isPre
                       let badgeClass = 'bg-slate-800 text-slate-200 border-slate-700';
                       let label = `${b.runsScored}`;
 
-                      if (b.dismissal) {
-                        badgeClass = 'bg-red-600 text-white border-red-400 font-bold';
-                        label = 'W';
-                      } else if (b.isBoundarySix) {
-                        badgeClass = 'bg-purple-600 text-white border-purple-400 font-bold';
-                        label = '6';
-                      } else if (b.isBoundaryFour) {
-                        badgeClass = 'bg-emerald-600 text-white border-emerald-400 font-bold';
-                        label = '4';
-                      } else if (b.extraType === 'wide') {
-                        badgeClass = 'bg-amber-600 text-white border-amber-400 font-bold';
-                        label = b.extraRuns > 1 ? `WD+${b.extraRuns - 1}` : 'WD';
-                      } else if (b.extraType === 'noBall') {
-                        badgeClass = 'bg-orange-600 text-white border-orange-400 font-bold';
-                        // Broadcast convention: a boundary hit from a no-ball is shown as N4/N6.
-                        label = b.runsScored === 4 ? 'N4' : b.runsScored === 6 ? 'N6' : 'NB';
+if (b.dismissal) {
+  badgeClass = 'bg-red-600 text-white border-red-400 font-bold';
+  label = 'W';
+} else if (b.extraType === 'noBall' && (b.isBoundarySix || b.runsScored === 6)) {
+  // No-ball + 6 batter runs = N6
+  badgeClass = 'bg-purple-600 text-white border-purple-400 font-bold';
+  label = 'N6';
+} else if (b.extraType === 'noBall' && (b.isBoundaryFour || b.runsScored === 4)) {
+  // No-ball + 4 batter runs = N4
+  badgeClass = 'bg-emerald-600 text-white border-emerald-400 font-bold';
+  label = 'N4';
+} else if (b.extraType === 'noBall') {
+  // Normal no-ball / no-ball with 1–3 batter runs
+  badgeClass = 'bg-orange-600 text-white border-orange-400 font-bold';
+  label = b.extraRuns > 1 ? `NB+${b.extraRuns - 1}` : 'NB';
+} else if (b.isBoundarySix) {
+  badgeClass = 'bg-purple-600 text-white border-purple-400 font-bold';
+  label = '6';
+} else if (b.isBoundaryFour) {
+  badgeClass = 'bg-emerald-600 text-white border-emerald-400 font-bold';
+  label = '4';
+} else if (b.extraType === 'wide') {
+  badgeClass = 'bg-amber-600 text-white border-amber-400 font-bold';
+  label = b.extraRuns > 1 ? `WD+${b.extraRuns - 1}` : 'WD';
                       } else if (b.extraType === 'bye') {
                         badgeClass = 'bg-sky-700 text-white border-sky-500';
                         label = `B${b.extraRuns}`;

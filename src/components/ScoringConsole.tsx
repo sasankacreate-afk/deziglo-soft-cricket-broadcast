@@ -432,19 +432,30 @@ export const ScoringConsole: React.FC = () => {
                   } else if (b.dismissal) {
                     badgeStyle = 'bg-red-600 text-white border-red-400 font-black';
                     label = 'W';
-                  } else if (b.isBoundarySix) {
-                    badgeStyle = 'bg-purple-600 text-white border-purple-400 font-black ring-1 ring-purple-400';
-                    label = '6';
-                  } else if (b.isBoundaryFour) {
-                    badgeStyle = 'bg-emerald-600 text-white border-emerald-400 font-black ring-1 ring-emerald-400';
-                    label = '4';
-                  } else if (b.extraType === 'wide') {
+                  } else if (b.extraType === 'noBall' && b.isBoundarySix) {
+  badgeStyle = 'bg-purple-600 text-white border-purple-400 font-black ring-1 ring-purple-400';
+  label = 'N6';
+} else if (b.extraType === 'noBall' && b.isBoundaryFour) {
+  badgeStyle = 'bg-emerald-600 text-white border-emerald-400 font-black ring-1 ring-emerald-400';
+  label = 'N4';
+} else if (b.isBoundarySix) {
+  badgeStyle = 'bg-purple-600 text-white border-purple-400 font-black ring-1 ring-purple-400';
+  label = '6';
+} else if (b.isBoundaryFour) {
+  badgeStyle = 'bg-emerald-600 text-white border-emerald-400 font-black ring-1 ring-emerald-400';
+  label = '4';
+} else if (b.extraType === 'wide') {
                     badgeStyle = 'bg-amber-600 text-white border-amber-400 font-bold';
                     label = b.extraRuns > 1 ? `WD+${b.extraRuns - 1}` : 'WD';
                   } else if (b.extraType === 'noBall') {
-                    badgeStyle = 'bg-orange-600 text-white border-orange-400 font-bold';
-                    label = b.runsScored === 4 ? 'N4' : b.runsScored === 6 ? 'N6' : 'NB';
-                  } else if (b.extraType === 'bye') {
+  badgeStyle = 'bg-orange-600 text-white border-orange-400 font-bold';
+
+  if (b.runsScored > 0) {
+    label = `NB+${b.runsScored}`;
+  } else {
+    label = 'NB';
+  }
+} else if (b.extraType === 'bye') {
                     badgeStyle = 'bg-sky-700 text-white border-sky-500 font-bold';
                     label = `B${b.extraRuns}`;
                   } else if (b.extraType === 'legBye') {

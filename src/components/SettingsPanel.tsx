@@ -264,29 +264,66 @@ export const SettingsPanel: React.FC = () => {
             </div>
 
             <div>
-              <label className="block text-xs text-slate-300 font-tech font-bold uppercase mb-1">
-                LEGAL BALLS PER OVER:
-              </label>
-              <div className="flex gap-2">
-                {[4, 5, 6, 8].map((b) => (
-                  <button
-                    key={b}
-                    type="button"
-                    onClick={() => setForm({ ...form, ballsPerOver: b })}
-                    className={`px-4 py-1.5 rounded-lg font-tech font-bold text-xs border transition ${
-                      form.ballsPerOver === b
-                        ? 'bg-sky-500 text-slate-950 border-sky-400 font-black'
-                        : 'bg-slate-900 text-slate-300 border-slate-700 hover:bg-slate-800'
-                    }`}
-                  >
-                    {b} Balls
-                  </button>
-                ))}
-              </div>
-              <p className="text-[11px] text-slate-400 mt-1.5">
-                Standard cricket is 6 balls per over. Customizable for tape-ball / indoor formats.
-              </p>
-            </div>
+  <label className="block text-xs text-slate-300 font-tech font-bold uppercase mb-1">
+    LEGAL BALLS PER OVER:
+  </label>
+
+  <div className="flex flex-wrap items-center gap-2">
+    {/* Preset options */}
+    {[4, 5, 6].map((b) => (
+      <button
+        key={b}
+        type="button"
+        onClick={() => setForm({ ...form, ballsPerOver: b })}
+        className={`px-4 py-1.5 rounded-lg font-tech font-bold text-xs border transition ${
+          form.ballsPerOver === b
+            ? 'bg-sky-500 text-slate-950 border-sky-400 font-black'
+            : 'bg-slate-900 text-slate-300 border-slate-700 hover:bg-slate-800'
+        }`}
+      >
+        {b} Balls
+      </button>
+    ))}
+
+    {/* Custom balls per over */}
+    <div className="flex items-center gap-2 bg-slate-900 border border-slate-700 rounded-lg px-2 py-1">
+      <span className="text-[10px] text-slate-400 font-tech uppercase">
+        Custom:
+      </span>
+
+      <input
+        type="number"
+        min="1"
+        max="30"
+        value={form.ballsPerOver}
+        onChange={(e) => {
+          const value = parseInt(e.target.value, 10);
+
+          if (!Number.isNaN(value)) {
+            setForm({
+              ...form,
+              ballsPerOver: Math.min(30, Math.max(1, value)),
+            });
+          }
+        }}
+        className="w-16 bg-slate-950 border border-slate-600 rounded-md px-2 py-1 text-center text-sm text-white font-tech font-bold focus:outline-none focus:border-sky-400"
+      />
+
+      <span className="text-[10px] text-slate-400 font-tech">
+        BALLS
+      </span>
+    </div>
+  </div>
+
+  <p className="text-[11px] text-slate-400 mt-1.5">
+    Choose a preset or enter a custom value from 1 to 30 legal balls per over.
+    Standard cricket uses 6 balls per over.
+  </p>
+
+  <p className="text-[11px] text-emerald-400 mt-1 font-mono">
+    ✓ Current setting: {form.ballsPerOver} legal balls per over
+  </p>
+</div>
           </div>
         </div>
 
