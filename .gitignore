@@ -1,12 +1,20 @@
-node_modules/
-build/
+# Electron build output
+release/
 dist/
-coverage/
-.DS_Store
+win-unpacked/
+
+# Installer/build artifacts
+*.exe
+*.msi
+*.blockmap
+latest.yml
+
+# Logs
 *.log
-.env*
-!.env.example
 release/
-release/
-release/
-release/
+dist/
+win-unpacked/
+*.exe
+*.msi
+*.blockmap
+latest.yml
